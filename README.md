@@ -153,6 +153,8 @@ Example configuration:
 > 2. Click the hammer icon to view:
 >     - Tools made available to the mode
 
+- [Debugging in Claude Desktop](https://modelcontextprotocol.io/docs/tools/debugging#debugging-in-claude-desktop)
+
 Type in Claude Desktop:
 > Please use the add tool to sum 10 and 20
 
