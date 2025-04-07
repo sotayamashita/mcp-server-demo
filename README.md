@@ -1,12 +1,14 @@
-# mcp-server-demo
+# MCP Server Demo
 
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) - _An extremely fast Python package and project manager, written in Rust._
 
-## MCP Server Creation Guide
+## Overview
 
-This content is the almost same as the [modelcontextprotocol/python-sdk](https://github.com/modelcontextprotocol/python-sdk/blob/c2ca8e03e046908935d089a2ceed4e80b0c29a24/README.md) README, but I've added supplementary notes for parts where I got stuck or details that were omitted in the original.
+This guide walks through creating a simple Model Context Protocol (MCP) server and testing it with both the MCP Inspector and Claude Desktop. The content is based on the [modelcontextprotocol/python-sdk](https://github.com/modelcontextprotocol/python-sdk/blob/c2ca8e03e046908935d089a2ceed4e80b0c29a24/README.md) README, with additional notes for clarity.
+
+## Steps to Create an MCP Server
 
 ### 1. Environment Setup
 
@@ -59,7 +61,7 @@ def get_greeting(name: str) -> str:
     return f"Hello, {name}!"
 ```
 
-### 3. Debugging the MCP Server with MCP Inspector
+### 3. Testing with MCP Inspector
 
 #### Launch MCP Inspector
 
@@ -70,23 +72,24 @@ Starting MCP inspector...
 ⚙️ Proxy server listening on port 6277
 ```
 
-#### Verify the `add` tool is working
+#### Testing the `add` Tool
 
 1. Open the MCP Inspector
 2. Click "Connect"
 3. Click the "Tools" tab
 4. Click "List Tools" inside the "Tools" tab
 
-#### Verify the `get_greeting` resource is working
+#### Testing the `get_greeting` Resource
 
-1. Open the MCP Inspecter
+1. Open the MCP Inspector
 2. Click "Connect"
-2. Click "Resources" Tab
-3. Click "List Templates"
-4. Find "get_greeting"
-5. Type the name e.g. John
-6. Click "Read Resources"
+3. Click "Resources" Tab
+4. Click "List Templates"
+5. Find "get_greeting"
+6. Type a name (e.g., "John")
+7. Click "Read Resources"
 
+Example response:
 ```json
 {
   "contents": [
@@ -99,20 +102,27 @@ Starting MCP inspector...
 }
 ```
 
-### 4. Debugging the MCP Server with Claude Desktop
+### 4. Integrating with Claude Desktop
+
+#### Install the MCP Server in Claude Desktop
 
 ```bash
-# Install the Demo in Claude App
 uv run mcp install server.py
 
 [/dd/MM/YY HH:MM:SS] INFO     Added server 'Demo' to Claude config            claude.py:129
                      INFO     Successfully installed Demo in Claude app          cli.py:467
+```
 
+#### Verify Configuration
+
+```bash
 # For macOS/Linux
 cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
 
-# Example:
-# Note: After exectuting `uv run mcp install server.py`, the command is just "uv" directly, but it won't work without an absolute path
+Example configuration:
+
+```json
 {
     "mcpServers": {
         "Demo": {
@@ -130,7 +140,11 @@ cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
 }
 ```
 
-#### [Debugging in Claude Desktop](https://modelcontextprotocol.io/docs/tools/debugging#debugging-in-claude-desktop)
+**Note**: After executing `uv run mcp install server.py`, the command is set as just "uv" in the configuration, but it requires an absolute path to work properly.
+
+#### Using Claude Desktop with MCP
+
+##### Checking Server Status
 
 > The Claude.app interface provides basic server status information:
 > 1. Click the connect icon to view:
@@ -139,25 +153,19 @@ cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
 > 2. Click the hammer icon to view:
 >     - Tools made available to the mode
 
-#### Use `add` tool on Claude Desktop
-
-Type the following text:
-
+Type in Claude Desktop:
 > Please use the add tool to sum 10 and 20
 
-#### Use `get_greeting` resource on Claude Desktop
+##### Using the `get_greeting` Resource
 
-Type the following text:
-
-TODO: I cannot get the resource from Claude Desktop
+**Note**: There appears to be an issue retrieving resources from Claude Desktop. This section needs further investigation.
 
 ## FAQ
 
 ### How does Claude Desktop select which MCP server tools to use?
 
-- The MCP client basically connects to all provided servers, but which tools it uses depends on the content of the question
+- Claude connects to all configured MCP servers but selects tools based on the content of the user's query
 - If the question content is not suitable for using tools, the tools will not be used
-
 
 ## References
 
