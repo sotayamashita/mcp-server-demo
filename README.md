@@ -19,6 +19,9 @@ cd mcp-server-demo
 # Specify Python version
 echo "3.12" > .python-version
 
+# Install Python before creating a new virtual environment
+uv venv 
+
 # Activate virtual environment
 source .venv/bin/activate.fish
 
