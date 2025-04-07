@@ -102,7 +102,7 @@ Example response:
 }
 ```
 
-### 4. Integrating with Claude Desktop
+### 4. Testing with Claude Desktop
 
 #### Install the MCP Server in Claude Desktop
 
